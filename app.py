@@ -114,19 +114,13 @@ def page_forum_redirect():
 
 @app.route("/login", methods=["GET", "POST"])
 def page_login():
-    if "user_id" in session:
-        if "next" in request.args:
-            return redirect(request.args["next"])
-        return redirect(url_for("page_index"))
-
     if request.method == "POST":
         username = request.form["username"].strip()
         password = request.form["password"]
-        next_url = request.form["next"]
 
         if not username or not password:
             flash("Ange användarnamn och lösenord", "error")
-            return render_template("login.html", next_url=next_url)
+            return render_template("login.html")
 
         user = fetch_one(
             "SELECT id, username, password, role FROM users WHERE username = %s",
@@ -134,19 +128,15 @@ def page_login():
         )
         if user is None or not check_password_hash(user["password"], password):
             flash("Fel användarnamn eller lösenord", "error")
-            return render_template("login.html", next_url=next_url)
+            return render_template("login.html")
 
         session.clear()
         session["user_id"] = user["id"]
         session["username"] = user["username"]
         session["role"] = user["role"]
-        return redirect(next_url)
-
-    if "next" in request.args:
-        next_url = request.args["next"]
-    else:
-        next_url = url_for("page_index")
-    return render_template("login.html", next_url=next_url)
+        return redirect(url_for("page_index"))
+        
+    return render_template("login.html")
 
 
 @app.route("/register", methods=["GET", "POST"])
