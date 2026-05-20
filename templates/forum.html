@@ -1,0 +1,36 @@
+{% extends "base.html" %} {% block content %}
+<div class="container">
+  <div class="page-header">
+    <h1>Alla ämnen</h1>
+    {% if session.get('username') %}
+    <a href="{{ url_for('page_create_topic') }}" class="btn btn-primary"
+      >Nytt ämne</a
+    >
+    {% else %}
+    <a href="{{ url_for('page_login') }}" class="btn btn-primary"
+      >Logga in för att skapa ämne</a
+    >
+    {% endif %}
+  </div>
+  {% include "messages.html" %}
+  <div class="topic-list">
+    {% if topics %} {% for topic in topics %}
+    <a
+      href="{{ url_for('page_topic', topic_id=topic.id) }}"
+      class="card topic-link"
+    >
+      <h2>{{ topic.title }}</h2>
+      <p class="meta">
+        av {{ topic.author_username }} · {{ topic.created_at|datum }} · {{
+        topic.post_count }} svar
+      </p>
+      <p>
+        {{ topic.content[:200] }}{% if topic.content|length > 200 %}…{% endif %}
+      </p>
+    </a>
+    {% endfor %} {% else %}
+    <p class="empty-state">Inga ämnen</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

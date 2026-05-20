@@ -1,0 +1,27 @@
+{% extends "base.html" %} {% block nav %}{% endblock %} {% block content %}
+<div class="auth-page">
+  <div class="auth-box">
+    <h1>Skapa konto</h1>
+    {% include "messages.html" %}
+    <form method="post" action="{{ url_for('page_register') }}">
+      <div class="form-group">
+        <label for="username">Användarnamn</label>
+        <input type="text" id="username" name="username" />
+      </div>
+      <div class="form-group">
+        <label for="password">Lösenord</label>
+        <input type="text" id="password" name="password" />
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">
+        Registrera
+      </button>
+    </form>
+    <p class="auth-box-link">
+      Har du konto? <a href="{{ url_for('page_login') }}">Logga in</a>
+    </p>
+    <p class="auth-box-footer">
+      <a href="{{ url_for('page_index') }}">Tillbaka till forumet</a>
+    </p>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends "base.html" %} {% block content %}
+<div class="container">
+  <h1>Profil</h1>
+  <div class="card">
+    <p><strong>Användarnamn:</strong> {{ session.username }}</p>
+    <p><strong>Roll:</strong> {{ session.role }}</p>
+    <p><strong>Användar-ID:</strong> {{ session.user_id }}</p>
+  </div>
+</div>
+{% endblock %}

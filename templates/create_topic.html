@@ -1,0 +1,21 @@
+{% extends "base.html" %} {% block content %}
+<div class="container">
+  <div class="page-header">
+    <h1>Skapa ämne</h1>
+  </div>
+  {% include "messages.html" %}
+  <form method="post" action="{{ url_for('page_create_topic') }}" class="card">
+    <div class="form-group">
+      <label for="title">Titel</label>
+      <input type="text" id="title" name="title" required maxlength="200" />
+    </div>
+    <div class="form-group">
+      <label for="content">Innehåll</label>
+      <textarea id="content" name="content" required></textarea>
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Skapa ämne</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

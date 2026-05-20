@@ -1,0 +1,14 @@
+<header class="navbar">
+  <a class="brand">Slutprojekt</a>
+  <nav>
+    {% if session.get('username') %}
+    <a href="{{ url_for('page_index') }}">Forum</a>
+    <a href="{{ url_for('page_create_topic') }}">Skapa ämne</a>
+    <a href="{{ url_for('page_profile') }}">Profil</a>
+    <a href="{{ url_for('page_logout') }}">Logga ut</a>
+    {% else %}
+    <a href="{{ url_for('page_index') }}">Forum</a>
+    <a href="{{ url_for('page_login') }}">Logga in</a>
+    {% endif %}
+  </nav>
+</header>

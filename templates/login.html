@@ -1,0 +1,38 @@
+{% extends "base.html" %} {% block nav %}{% endblock %} {% block content %}
+<div class="auth-page">
+  <div class="auth-box">
+    <h1>Slutprojekt</h1>
+    {% include "messages.html" %}
+    <form method="post" action="{{ url_for('page_login') }}">
+      <input type="hidden" name="next" value="{{ next_url }}" />
+      <div class="form-group">
+        <label for="username">Användarnamn</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          required
+          autocomplete="username"
+        />
+      </div>
+      <div class="form-group">
+        <label for="password">Lösenord</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          required
+          autocomplete="current-password"
+        />
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">Logga in</button>
+    </form>
+    <p class="auth-box-link">
+      Inget konto? <a href="{{ url_for('page_register') }}">Registrera</a>
+    </p>
+    <p class="auth-box-footer">
+      <a href="{{ url_for('page_index') }}">Tillbaka till forumet</a>
+    </p>
+  </div>
+</div>
+{% endblock %}

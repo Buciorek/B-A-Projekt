@@ -1,0 +1,63 @@
+{% extends "base.html" %} {% block content %}
+<div class="container">
+  {% include "messages.html" %}
+
+  <article class="card">
+    <h1>{{ topic.title }}</h1>
+    <p class="meta">
+      av {{ topic.author_username }} · {{ topic.created_at|datum }}
+    </p>
+    <p>{{ topic.content }}</p>
+    {% if session.get('role') == 'admin' %}
+    <form
+      method="post"
+      action="{{ url_for('delete_topic', topic_id=topic.id) }}"
+      class="delete-topic-form"
+    >
+      <button type="submit" class="btn btn-danger">Ta bort ämne</button>
+    </form>
+    {% endif %}
+  </article>
+
+  <section class="card replies-section">
+    <h2>Svar</h2>
+    {% if posts %} {% for post in posts %}
+    <div class="post-item">
+      <p class="meta">
+        {{ post.author_username }} · {{ post.created_at|datum }}
+      </p>
+      <p>{{ post.content }}</p>
+      {% if session.get('role') == 'admin' or (session.get('user_id') ==
+      post.user_id) %}
+      <form
+        method="post"
+        action="{{ url_for('delete_post', post_id=post.id) }}"
+        class="post-actions"
+      >
+        <button type="submit" class="btn btn-danger">Ta bort</button>
+      </form>
+      {% endif %}
+    </div>
+    {% endfor %} {% else %}
+    <p class="empty-state">Inga svar ännu</p>
+    {% endif %} {% if session.get('username') %}
+    <form
+      method="post"
+      action="{{ url_for('page_topic', topic_id=topic.id) }}"
+      class="reply-form"
+    >
+      <div class="form-group">
+        <label for="content">Skriv ett svar</label>
+        <textarea id="content" name="content" required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Publicera svar</button>
+    </form>
+    {% else %}
+    <p class="empty-state empty-state--compact">
+      <a href="{{ url_for('page_login', next=request.path) }}">Logga in</a> för
+      att publicera ett svar
+    </p>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}
